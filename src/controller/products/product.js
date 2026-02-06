@@ -1,8 +1,10 @@
 const productModule = require('../../model/productModule');
 const mongoose = require('mongoose');
+const mongodbConnection = require('../../connectionDB/mongodbConnection');
 // Create a new product     
 exports.createProduct = async(req,res) => {
 try{
+  await mongodbConnection();
 const insertProduct = await productModule.insertMany(req.body); 
 res.status(200).json({message:'Product created sucessfully',data : insertProduct})
 }catch(err) {
@@ -17,7 +19,7 @@ exports.getAllProducts = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-
+    await mongodbConnection();
     const products = await productModule
       .find()
       .sort({ createdAt: -1 })
@@ -47,6 +49,7 @@ exports.getAllProducts = async (req, res) => {
 exports.getProductById = async(req,res) =>{
  try{
  const productId = req.params.id;
+ await mongodbConnection();
  const getProduct = await productModule.findById(productId);
  res.status(200).json({message:'Product fetched successfully', data: getProduct});
  }catch(err) {
@@ -58,7 +61,7 @@ res.status(500).json({message: 'Internal server error'});
 
 exports.getUserProductDetails = async (req, res) => {
   try {
-    
+    await mongodbConnection();
     const page = parseInt(req.query.page) || 1;          
     const limit = parseInt(req.query.limit) || 10;       
     

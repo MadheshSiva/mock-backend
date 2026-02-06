@@ -37,16 +37,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Backend is running on Vercel!' });
 });
 
-// Connect to MongoDB and export the app (NO app.listen!)
-mongodbConnection()
-  .then(() => {
-    console.log('MongoDB connected successfully');
-    // No app.listen() needed — Vercel handles it
-  })
-  .catch((err) => {
-    console.error('Failed to connect to the database', err);
-    // You can still throw or log, but don't crash the whole function
-  });
+
 
 // Export the Express app for Vercel
 module.exports = app;
