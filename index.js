@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongodbConnection = require('./src/connectionDB/mongodbConnection');
 const { createUser, getAllusers, updateUser, deleteuser, userIsDelete, userInactive } = require('./src/controller/users/users');
-const { createProduct, getAllProducts, getProductById, getUserProductDetails } = require('./src/controller/products/product');
+const { createProduct, getAllProducts, getProductById, getUserProductDetails,updateProduct } = require('./src/controller/products/product');
 require('dotenv').config();
 
 const app = express();
@@ -28,7 +28,7 @@ Router.post('/products-create', createProduct);
 Router.get('/products-getall', getAllProducts);
 Router.get('/products-getbyid/:id', getProductById);
 Router.get('/products-userdetails', getUserProductDetails);
-
+Router.put('/products-update/:id', updateProduct);
 // Mount all routes under /api
 app.use('/api', Router);
 

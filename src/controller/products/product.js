@@ -13,6 +13,19 @@ res.status(500).json({message: 'Internal server error'});
 }
 }
 
+//update Product by ID
+exports.updateProduct = async(req,res) => {
+try{
+  await mongodbConnection();
+  const productId = req.params.id;
+  const updateData = req.body;
+  const updateProduct = await productModule.findByIdAndUpdate(productId, updateData);
+  res.status(200).json({message:'Product updated successfully', data: updateProduct});
+}catch(err) {
+  console.log(`Error updating product: ${err}`);
+  res.status(500).json({message: 'Internal server error'});  
+}
+}
 // Get all products
 exports.getAllProducts = async (req, res) => {
   try {
